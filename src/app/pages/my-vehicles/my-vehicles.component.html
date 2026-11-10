@@ -1,0 +1,263 @@
+<section class="vehicles-shell">
+
+  <!-- Header -->
+  <header class="vehicles-header">
+    <div>
+      <p class="eyebrow">My vehicles</p>
+      <h1>Assigned vehicle details</h1>
+      <p>
+        Review your current vehicle assignment and your previous vehicle history.
+      </p>
+    </div>
+  </header>
+
+
+  <!-- Loading -->
+  <div class="state-card" *ngIf="loading">
+    <i class="fa-solid fa-spinner fa-spin"></i>
+    <p>Loading your vehicle information...</p>
+  </div>
+
+
+  <!-- Error -->
+  <div class="state-card error-state" *ngIf="!loading && errorMessage">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+
+  <!-- Vehicle Content -->
+  <ng-container *ngIf="!loading && !errorMessage">
+
+    <div class="vehicles-grid">
+
+      <!-- Current Assignment -->
+      <section class="vehicle-card current-card">
+
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Current assignment</p>
+            <h2>My vehicle</h2>
+          </div>
+
+          <span
+            class="status-pill"
+            [class.active]="activeAssignment"
+            [class.inactive]="!activeAssignment">
+            {{ vehicleStatus }}
+          </span>
+        </div>
+
+
+        <div class="vehicle-main">
+
+          <div class="vehicle-icon">
+            <i class="fa-solid fa-car"></i>
+          </div>
+
+          <div>
+            <span class="vehicle-label">Vehicle</span>
+            <strong>{{ assignedVehicle }}</strong>
+          </div>
+
+        </div>
+
+
+        <dl class="vehicle-details">
+
+          <div>
+            <dt>Vehicle</dt>
+            <dd>{{ assignedVehicle }}</dd>
+          </div>
+
+          <div>
+            <dt>Model</dt>
+            <dd>{{ assignedVehicleModel }}</dd>
+          </div>
+
+          <div>
+            <dt>Route</dt>
+            <dd>{{ vehicleRoute }}</dd>
+          </div>
+
+          <div>
+            <dt>Status</dt>
+            <dd>{{ vehicleStatus }}</dd>
+          </div>
+
+          <div *ngIf="activeAssignment?.assignmentDate">
+            <dt>Assignment Date</dt>
+            <dd>{{ activeAssignment.assignmentDate | date:'mediumDate' }}</dd>
+          </div>
+
+        </dl>
+
+      </section>
+
+
+      <!-- Driver Information -->
+      <section class="vehicle-card driver-card">
+
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Driver profile</p>
+            <h2>Assignment information</h2>
+          </div>
+        </div>
+
+        <div class="driver-info" *ngIf="driver">
+
+          <div class="info-row">
+            <span>Driver</span>
+            <strong>
+              {{ driver.firstName }}
+              {{ driver.middleName }}
+              {{ driver.lastName }}
+            </strong>
+          </div>
+
+          <div class="info-row">
+            <span>Employee ID</span>
+            <strong>{{ driver.employeeId || 'N/A' }}</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Branch</span>
+            <strong>{{ driver.branch || 'N/A' }}</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Driver Type</span>
+            <strong>{{ driver.driverType || 'N/A' }}</strong>
+          </div>
+
+        </div>
+
+        <div class="unassigned-message" *ngIf="!activeAssignment">
+          <i class="fa-solid fa-car-side"></i>
+          <h3>No vehicle assigned</h3>
+          <p>
+            You currently do not have an active vehicle assignment.
+            Please contact your administrator for more information.
+          </p>
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- Assignment History -->
+    <section class="vehicle-card history-card">
+
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">Vehicle history</p>
+          <h2>Previous assignments</h2>
+          <p class="card-description">
+            Your previous vehicle assignments are listed below.
+          </p>
+        </div>
+
+        <span class="history-count">
+          {{ assignmentHistory.length }}
+          {{ assignmentHistory.length === 1 ? 'assignment' : 'assignments' }}
+        </span>
+      </div>
+
+
+      <!-- History Table -->
+      <div
+        class="history-table-wrapper"
+        *ngIf="assignmentHistory.length > 0">
+
+        <table class="history-table">
+
+          <thead>
+            <tr>
+              <th>Vehicle</th>
+              <th>Model</th>
+              <th>Assignment Date</th>
+              <th>Released Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let assignment of assignmentHistory">
+
+              <td>
+                <div class="vehicle-name">
+                  <div class="small-vehicle-icon">
+                    <i class="fa-solid fa-car"></i>
+                  </div>
+
+                  <strong>
+                    {{ assignment.plate || 'N/A' }}
+                  </strong>
+                </div>
+              </td>
+
+              <td>
+                {{ assignment.model || 'N/A' }}
+              </td>
+
+              <td>
+                {{ assignment.assignmentDate
+                  ? (assignment.assignmentDate | date:'mediumDate')
+                  : 'N/A'
+                }}
+              </td>
+
+              <td>
+                {{ assignment.releasedDate
+                  ? (assignment.releasedDate | date:'mediumDate')
+                  : 'N/A'
+                }}
+              </td>
+
+              <td>
+                <span
+                  class="history-status"
+                  [class.active]="
+                    assignment.status === 'Assigned' ||
+                    assignment.status === 'ACTIVE' ||
+                    assignment.status === 'Active'
+                  ">
+                  {{ assignment.status || 'Unknown' }}
+                </span>
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- No History -->
+      <div
+        class="empty-history"
+        *ngIf="assignmentHistory.length === 0">
+
+        <div class="empty-icon">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
+
+        <h3>No previous assignments</h3>
+
+        <p>
+          Your previous vehicle assignments will appear here once you have
+          completed a vehicle assignment.
+        </p>
+
+      </div>
+
+    </section>
+
+  </ng-container>
+
+</section>

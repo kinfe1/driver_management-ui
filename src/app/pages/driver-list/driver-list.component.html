@@ -1,0 +1,58 @@
+<section class="driver-list-shell">
+  <div class="list-header">
+    <div>
+      <h2>Driver list</h2>
+      <p>Search and manage the current roster, credentials, and vehicle assignments.</p>
+    </div>
+    <button class="primary-btn" type="button" (click)="goToAddDriver()">Register driver</button>
+  </div>
+
+  <form class="filter-panel" (submit)="false">
+    <!-- <label class="sr-only" for="driver-search">Search drivers</label> -->
+    <input id="driver-search" type="search" placeholder="Search by name, ID, license, branch..." [(ngModel)]="filter" name="search" />
+
+    <label class="sr-only" for="status-filter">Filter by status</label>
+    <select id="status-filter" [(ngModel)]="selectedStatus" name="status">
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+
+    <div class="results-meta">
+      <span>{{ filteredDrivers.length }} drivers found</span>
+    </div>
+  </form>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Driver</th>
+          <th>Branch</th>
+          <th>Driver type</th>
+          <th>Status</th>
+          <th>License</th>
+          <th>Vehicle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of filteredDrivers">
+          <td data-label="Driver">
+            <div class="driver-name">
+              <img [src]="driver.photoUrl" alt="{{ driver.firstName }} {{ driver.lastName }}" />
+              <div>
+                <strong>{{ driver.firstName }} {{ driver.lastName }}</strong>
+                <span>{{ driver.email }}</span>
+              </div>
+            </div>
+          </td>
+          <td data-label="Branch">{{ driver.branch }}</td>
+          <td data-label="Driver type">{{ driver.driverType }}</td>
+          <td data-label="Status"><span class="status-chip" [ngClass]="getStatusClass(driver.status?.toString() || '')">{{ getStatusDisplay(driver.status?.toString() || '') }}</span></td>
+          <td data-label="License">{{ driver.licenseNumber }}</td>
+          <td data-label="Vehicle">{{ driver.assignedVehicle }}</td>
+          <td data-label="Actions"><button class="secondary-btn" type="button" (click)="openProfile(driver)">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

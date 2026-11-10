@@ -1,0 +1,376 @@
+
+<header class="site-header">
+  <a class="brand" routerLink="/">
+    <span class="brand-icon">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 11l1.5-4.5A2.2 2.2 0 0 1 8.6 5h6.8a2.2 2.2 0 0 1 2.1 1.5L19 11"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M3.5 12.5A2.5 2.5 0 0 1 6 10h12a2.5 2.5 0 0 1 2.5 2.5V17h-17v-4.5Z"
+          stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <circle cx="7.5" cy="17" r="1.5" fill="currentColor"/>
+        <circle cx="16.5" cy="17" r="1.5" fill="currentColor"/>
+        <path d="M8 13.5h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="brand-name">
+      <strong>ET-Richmond Taxi</strong>
+      <small>Non-Emergency Medical Transport</small>
+    </span>
+  </a>
+
+  <nav class="desktop-nav" aria-label="Main navigation">
+    <a href="#home" (click)="scrollToSection('home', $event)">Home</a>
+    <a href="#about" (click)="scrollToSection('about', $event)">About Us</a>
+    <a href="#services" (click)="scrollToSection('services', $event)">Our Services</a>
+    <a href="#contact" (click)="scrollToSection('contact', $event)">Contact</a>
+  </nav>
+
+  <div class="header-actions">
+    <a class="login-link" routerLink="/login" [queryParams]="{role: 'DRIVER'}">
+      Driver Login
+    </a>
+    <a class="button button-dark admin-button"
+       routerLink="/login" [queryParams]="{role: 'ADMIN'}">
+      Admin Login <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="hero-background"></div>
+
+    <div class="hero-content">
+      <div class="eyebrow hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        NON-EMERGENCY MEDICAL TRANSPORTATION
+      </div>
+
+      <h1>
+        Every trip<br />
+        deserves <span>compassion.</span>
+      </h1>
+
+      <p class="hero-description">
+        ET-Richmond Taxi provides reliable non-emergency medical transportation
+        for patients, seniors, and families needing safe, respectful rides to
+        appointments, treatment centers, and ongoing care services.
+      </p>
+
+      <div class="hero-actions">
+        <button class="button button-primary" type="button"
+                (click)="scrollToContact()">
+          Get in Touch <span aria-hidden="true">→</span>
+        </button>
+        <a class="text-link" href="#about" (click)="scrollToSection('about', $event)">
+          Discover our company <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <div class="hero-note">
+        <span class="note-icon" aria-hidden="true">✓</span>
+        <span>Safe rides. Respectful care. Reliable support.</span>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-label="Service overview">
+      <div class="status-card">
+        <div class="card-tag">Live availability</div>
+        <div class="card-value">
+          <strong>24/7</strong>
+          <span>medical ride coverage</span>
+        </div>
+        <ul>
+          <li><span class="dot"></span>Doctor appointments</li>
+          <li><span class="dot"></span>Dialysis and therapy</li>
+          <li><span class="dot"></span>Scheduled medical trips</li>
+        </ul>
+      </div>
+
+      <div class="mini-note note-one">
+        <span>Comfort-first care</span>
+        <strong>5-star patient support</strong>
+      </div>
+
+      <div class="mini-note note-two">
+        <span>Trusted for</span>
+        <strong>medical transportation</strong>
+      </div>
+    </div>
+
+    <div class="hero-side-label" aria-hidden="true">
+      ET-RICHMOND TAXI · HERE FOR YOUR JOURNEY
+    </div>
+  </section>
+
+  <section class="trust-strip" aria-label="Our commitments">
+    <div class="trust-item">
+      <span class="trust-icon">01</span>
+      <div>
+        <strong>Reliable Care</strong>
+        <small>Transportation you can depend on for appointments and treatment</small>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">02</span>
+      <div>
+        <strong>Patient Focused</strong>
+        <small>Respectful, comfortable rides that prioritize dignity and ease</small>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">03</span>
+      <div>
+        <strong>Professional Support</strong>
+        <small>Service built around medical needs and scheduling requirements</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-section" id="about">
+    <div class="section-kicker">GET TO KNOW US</div>
+
+    <div class="about-grid">
+      <div>
+        <h2>Healthcare trips deserve reliability, comfort, and respect.</h2>
+      </div>
+
+      <div class="about-copy">
+        <p>
+          At ET-Richmond Taxi, we understand that every medical trip matters.
+          Whether it's a routine appointment, therapy session, dialysis visit,
+          or ongoing care need, we provide dependable non-emergency medical
+          transportation with clear communication and compassionate service.
+        </p>
+        <p>
+          Our focus is simple: treat every rider with dignity, arrive on time,
+          and make the journey easier for patients, families, and caregivers.
+        </p>
+        <a class="inline-link" href="#contact" (click)="scrollToSection('contact', $event)">
+          Talk to our team <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-section" id="services">
+    <div class="section section-inner">
+      <div class="section-heading">
+        <div>
+          <div class="section-kicker">WHAT WE DO</div>
+          <h2>Transportation designed for medical needs.</h2>
+        </div>
+        <p>
+          A professional approach to scheduled non-emergency medical transportation
+          and patient support.
+        </p>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <div class="service-number">01</div>
+          <div class="service-symbol" aria-hidden="true">↗</div>
+          <h3>Medical Appointments</h3>
+          <p>
+            Dependable rides to doctor visits, checkups, and specialist
+            appointments without added stress.
+          </p>
+        </article>
+
+        <article class="service-card service-card-featured">
+          <div class="service-number">02</div>
+          <div class="service-symbol" aria-hidden="true">♡</div>
+          <h3>Patient-Centered Care</h3>
+          <p>
+            A respectful, considerate approach that keeps comfort, dignity,
+            and care at the center of the journey.
+          </p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-number">03</div>
+          <div class="service-symbol" aria-hidden="true">✓</div>
+          <h3>Ongoing Treatment Support</h3>
+          <p>
+            Reliable transportation for therapy, rehabilitation, dialysis,
+            and other recurring care needs.
+          </p>
+        </article>
+      </div>
+      <p class="service-disclaimer">
+        For service availability, accessibility needs, and scheduling,
+        please contact our team.
+      </p>
+    </div>
+  </section>
+
+  <section class="approach-section">
+    <div class="approach-content">
+      <div class="section-kicker light-kicker">THE ET-RICHMOND APPROACH</div>
+      <h2>Care on the way.<br />Support every step.</h2>
+      <p>
+        We believe a positive medical transportation experience starts with
+        listening, continues with clear communication, and ends with patients
+        feeling safe, respected, and supported.
+      </p>
+      <button class="button button-light" type="button"
+              (click)="scrollToContact()">
+        Contact Our Team <span aria-hidden="true">→</span>
+      </button>
+    </div>
+    <div class="approach-decoration" aria-hidden="true">
+      <div class="route-line"></div>
+      <div class="route-point point-one"></div>
+      <div class="route-point point-two"></div>
+      <div class="route-point point-three"></div>
+      <span class="route-label">YOUR JOURNEY, OUR COMMITMENT</span>
+    </div>
+  </section>
+
+  <section class="section contact-section" id="contact">
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <div class="section-kicker">LET'S TALK</div>
+        <h2>How can we<br />help you today?</h2>
+        <p>
+          Have a question about non-emergency medical transportation services?
+          Send us a message and our team can follow up with you.
+        </p>
+
+        <div class="contact-promise">
+          <span class="promise-check">✓</span>
+          <div>
+            <strong>We're here to help.</strong>
+            <p>Tell us what you need and how we can reach you.</p>
+          </div>
+        </div>
+
+        <div class="contact-reminder">
+          <strong>Need a ride for care?</strong>
+          <p>
+            Use this form to ask about appointments, treatment visits, and
+            scheduling for non-emergency medical transportation.
+          </p>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+        <h3>Send us a message</h3>
+        <p class="form-subtitle">Fields marked with * are required.</p>
+
+        <div class="form-alert success-alert" *ngIf="successMessage" role="status">
+          <span>✓</span> {{ successMessage }}
+        </div>
+
+        <div class="form-alert error-alert" *ngIf="errorMessage" role="alert">
+          {{ errorMessage }}
+        </div>
+
+        <form [formGroup]="contactForm" (ngSubmit)="submitContact()" novalidate>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Full name *</label>
+              <input id="name" type="text" formControlName="name"
+                     placeholder="Your full name" autocomplete="name" />
+              <small class="field-error"
+                     *ngIf="f.name.touched && f.name.invalid">
+                Please enter at least 2 characters.
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email address *</label>
+              <input id="email" type="email" formControlName="email"
+                     placeholder="you@example.com" autocomplete="email" />
+              <small class="field-error"
+                     *ngIf="f.email.touched && f.email.invalid">
+                Please enter a valid email address.
+              </small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="phone">Phone number</label>
+              <input id="phone" type="tel" formControlName="phone"
+                     placeholder="Your phone number" autocomplete="tel" />
+            </div>
+
+            <div class="form-field">
+              <label for="subject">What is this about? *</label>
+              <select id="subject" formControlName="subject">
+                <option value="" disabled>Select a subject</option>
+                <option value="Transportation inquiry">Transportation inquiry</option>
+                <option value="Scheduling question">Scheduling question</option>
+                <option value="General question">General question</option>
+                <option value="Feedback">Feedback</option>
+                <option value="Other">Other</option>
+              </select>
+              <small class="field-error"
+                     *ngIf="f.subject.touched && f.subject.invalid">
+                Please select a subject.
+              </small>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="message">Your message *</label>
+            <textarea id="message" formControlName="message" rows="5"
+                      placeholder="Tell us how we can help..."></textarea>
+            <small class="field-error"
+                   *ngIf="f.message.touched && f.message.invalid">
+              Please enter a message of at least 10 characters.
+            </small>
+          </div>
+
+          <button class="button button-primary submit-button"
+                  type="submit" [disabled]="isSubmitting">
+            <span *ngIf="!isSubmitting">Send Message <span aria-hidden="true">→</span></span>
+            <span *ngIf="isSubmitting">Sending message...</span>
+          </button>
+
+          <p class="privacy-note">
+            Please don't include sensitive medical, payment, or other private
+            information in this form.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <a class="brand footer-brand" routerLink="/">
+      <span class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 11l1.5-4.5A2.2 2.2 0 0 1 8.6 5h6.8a2.2 2.2 0 0 1 2.1 1.5L19 11"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M3.5 12.5A2.5 2.5 0 0 1 6 10h12a2.5 2.5 0 0 1 2.5 2.5V17h-17v-4.5Z"
+            stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <circle cx="7.5" cy="17" r="1.5" fill="currentColor"/>
+          <circle cx="16.5" cy="17" r="1.5" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand-name">
+        <strong>ET-Richmond Taxi</strong>
+        <small>Transportation Services</small>
+      </span>
+    </a>
+
+    <p>Professional transportation. A people-first approach.</p>
+
+    <div class="footer-links">
+      <a href="#about" (click)="scrollToSection('about', $event)">About</a>
+      <a href="#services" (click)="scrollToSection('services', $event)">Services</a>
+      <a href="#contact" (click)="scrollToSection('contact', $event)">Contact Us</a>
+      <a routerLink="/login" [queryParams]="{role: 'DRIVER'}">Driver Login</a>
+      <a routerLink="/login" [queryParams]="{role: 'ADMIN'}">Admin Login</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© {{ currentYear }} ET-Richmond Taxi. All rights reserved.</span>
+    <a href="#home">Back to top ↑</a>
+  </div>
+</footer>

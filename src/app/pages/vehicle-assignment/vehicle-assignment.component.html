@@ -1,0 +1,230 @@
+<section class="vehicle-shell">
+
+  <!-- VEHICLES -->
+  <div class="card-head">
+    <div>
+      <h2>Vehicles</h2>
+      <p>Manage fleet vehicles.</p>
+    </div>
+
+    <button class="primary-btn" (click)="openVehicleModal()">
+      Add Vehicle
+    </button>
+  </div>
+
+
+  <div class="vehicle-table">
+    <table>
+
+      <thead>
+        <tr>
+          <th>Plate</th>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th>Type</th>
+          <th>Year</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+
+        <tr *ngFor="let vehicle of vehicles">
+
+          <td>{{vehicle.plateNumber}}</td>
+          <td>{{vehicle.manufacturer}}</td>
+          <td>{{vehicle.model}}</td>
+          <td>{{vehicle.vehicleType}}</td>
+          <td>{{vehicle.year}}</td>
+          <td>{{vehicle.status}}</td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+  </div>
+
+
+  <br>
+
+
+  <!-- ASSIGNMENTS -->
+
+  <div class="card-head veh-assign">
+
+    <div>
+      <h2>Vehicle Assignment</h2>
+      <p>Assign vehicles to drivers.</p>
+    </div>
+
+    <button class="primary-btn" (click)="openAssignModal()">
+      Assign Vehicle
+    </button>
+
+  </div>
+
+
+
+  <div class="vehicle-table">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Driver</th>
+          <th>Plate</th>
+          <th>Model</th>
+          <th>Status</th>
+          <th>Assigned At</th>
+          <th>Action</th>
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr *ngFor="let assignment of assignments">
+
+          <td>{{assignment.driverName}}</td>
+
+          <td>{{assignment.plate}}</td>
+
+          <td>{{assignment.model}}</td>
+
+          <td>{{assignment.status}}</td>
+
+          <td>{{assignment.assignedAt}}</td>
+
+
+          <td>
+            <button class="secondary-btn">
+              Remove
+            </button>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+</section>
+
+
+
+<!-- ADD VEHICLE MODAL -->
+
+<div class="modal-backdrop" *ngIf="showVehicleModal">
+
+  <div class="modal">
+
+    <h3>Add Vehicle</h3>
+
+
+    <label>
+      Plate Number
+      <input [(ngModel)]="vehicle.plateNumber">
+    </label>
+
+
+    <label>
+      Manufacturer
+      <input [(ngModel)]="vehicle.manufacturer">
+    </label>
+
+
+    <label>
+      Model
+      <input [(ngModel)]="vehicle.model">
+    </label>
+
+
+    <label>
+      Vehicle Type
+      <input [(ngModel)]="vehicle.vehicleType">
+    </label>
+
+
+    <label>
+      Year
+      <input type="number" [(ngModel)]="vehicle.year">
+    </label>
+
+
+    <div class="actions">
+
+      <button class="secondary-btn"
+              (click)="closeVehicleModal()">
+        Cancel
+      </button>
+
+
+      <button class="primary-btn"
+              (click)="saveVehicle()">
+        Save
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- ASSIGN VEHICLE MODAL -->
+
+
+<div class="modal-backdrop" *ngIf="showAssignModal">
+
+  <div class="modal">
+
+    <h3>Assign Vehicle</h3>
+
+    <label>
+      Driver
+      <select [(ngModel)]="assignment.driverId">
+        <option value="">
+        Select Driver
+        </option>
+        <option *ngFor="let driver of drivers"
+                [value]="driver.id">
+          {{driver.firstName}} {{driver.lastName}}
+        </option>
+      </select>
+    </label>
+
+    <label>
+      Vehicle
+
+      <select [(ngModel)]="assignment.vehicleId">
+
+        <option value="">Select Vehicle</option>
+
+        <option *ngFor="let vehicle of availableVehicles"
+                [value]="vehicle.id">
+          {{vehicle.plateNumber}} - {{vehicle.model}}
+        </option>
+      </select>
+    </label>
+
+  <label> Assignment Date
+    <input type="date" [(ngModel)]="assignment.assignmentDate">
+  </label>
+
+  <div class="actions">
+    <button class="secondary-btn" (click)="closeAssignModal()"> Cancel </button>
+    <button class="primary-btn" (click)="saveAssignment()"> Assign </button>
+  </div>
+
+  </div>
+
+</div>

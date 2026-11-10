@@ -1,0 +1,73 @@
+<section class="documents-shell">
+  <header class="documents-header">
+    <div>
+      <p class="eyebrow">My documents</p>
+      <h1>All credentials in one place</h1>
+      <p>Check expiry dates, upload new files, and keep your profile ready for assignment.</p>
+    </div>
+  </header>
+
+  <div class="upload-panel">
+    <div class="upload-form">
+      <div class="upload-form-fields">
+        <label>
+          Document Type
+          <select [(ngModel)]="upload.documentType" name="documentType">
+            <option value="DRIVER_LICENSE">Driver License</option>
+            <option value="MEDICAL_CERTIFICATE">Medical Certificate</option>
+            <option value="NATIONAL_ID">National ID</option>
+            <option value="PASSPORT">Passport</option>
+            <option value="INSURANCE">Insurance</option>
+          </select>
+        </label>
+
+        <label>
+          Issue Date
+          <input type="date" [(ngModel)]="upload.issueDate" name="issueDate" />
+        </label>
+
+        <label>
+          Expiry Date
+          <input type="date" [(ngModel)]="upload.expiryDate" name="expiryDate" />
+        </label>
+      </div>
+
+      <label class="dropzone">
+        <input type="file" accept=".pdf,.jpg,.png" (change)="onFileSelected($event)" />
+        <div>
+          <strong>Upload a document</strong>
+          <span>PDF, JPG, PNG • max 10 MB</span>
+        </div>
+      </label>
+    </div>
+
+    <div class="upload-actions">
+      <p *ngIf="selectedFileName">Selected: <strong>{{ selectedFileName }}</strong></p>
+      <p *ngIf="uploadMessage" class="upload-message">{{ uploadMessage }}</p>
+      <button type="button" class="primary-btn" (click)="uploadDocument()">Upload file</button>
+    </div>
+  </div>
+
+  <div class="documents-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Issue Date</th>
+          <th>Expiry</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doc of uploads">
+          <td>{{ doc.documentType }}</td>
+          <td>{{ doc.issueDate }}</td>
+          <td>{{ doc.expiryDate }}</td>
+          <td><span class="status-pill" [ngClass]="getStatusClass(doc.status)">{{ doc.status }}</span></td>
+          <td><button class="secondary-btn" (click)="download(doc)">Download</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

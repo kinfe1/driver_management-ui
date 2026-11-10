@@ -1,0 +1,108 @@
+<section class="driver-home-shell">
+  <div class="welcome-card">
+    <div class="welcome-top">
+      <div>
+        <span class="eyebrow">Driver portal</span>
+        <h1>Welcome back, {{ userName }}</h1>
+        <p>Track your vehicle, upload documents, and keep your profile current from one dashboard.</p>
+      </div>
+      <div class="hero-actions">
+        <a routerLink="/my-documents" class="secondary-btn">My documents</a>
+        <a routerLink="/my-vehicles" class="primary-btn">My vehicles</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="small-card green">
+      <span>Assigned vehicle</span>
+      <strong>{{ assignedVehicle }}</strong>
+      <p>{{ driver?.assignedVehicleModel || 'Awaiting assignment' }}</p>
+    </div>
+
+    <div class="small-card yellow">
+      <span>Next renewal</span>
+      <strong>{{ nextRenewal }}</strong>
+      <p>Stay ahead of expiring credentials.</p>
+    </div>
+
+    <div class="small-card blue">
+      <span>Document status</span>
+      <strong>{{ documentStatus }}</strong>
+      <p>Upload missing files to avoid delays.</p>
+    </div>
+  </div>
+
+  <div class="dashboard-layout">
+    <section class="card upload-card">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">Upload document</p>
+          <h2>Submit a new credential</h2>
+        </div>
+      </div>
+
+      <div class="upload-panel">
+        <div class="upload-form-fields">
+          <label>
+            Document Type
+            <select [(ngModel)]="upload.documentType" name="documentType">
+              <option value="DRIVER_LICENSE">Driver License</option>
+              <option value="MEDICAL_CERTIFICATE">Medical Certificate</option>
+              <option value="NATIONAL_ID">National ID</option>
+              <option value="PASSPORT">Passport</option>
+              <option value="INSURANCE">Insurance</option>
+            </select>
+          </label>
+
+          <label>
+            Issue Date
+            <input type="date" [(ngModel)]="upload.issueDate" name="issueDate" />
+          </label>
+
+          <label>
+            Expiry Date
+            <input type="date" [(ngModel)]="upload.expiryDate" name="expiryDate" />
+          </label>
+        </div>
+
+        <label class="upload-dropzone">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" (change)="onFileSelected($event)" />
+          <div>
+            <strong>Drag & drop or click to choose a file</strong>
+            <span>PDF, JPG, PNG • max 10 MB</span>
+          </div>
+        </label>
+
+        <div class="upload-info">
+          <p *ngIf="selectedFileName">Selected file: <strong>{{ selectedFileName }}</strong></p>
+          <p *ngIf="uploadMessage" class="upload-message">{{ uploadMessage }}</p>
+          <button class="primary-btn" type="button" (click)="uploadDocument()" [disabled]="isUploading">
+            {{ isUploading ? 'Uploading...' : 'Upload document' }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card quick-link-card">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">Quick actions</p>
+          <h2>Manage your profile and assignments</h2>
+        </div>
+      </div>
+
+      <div class="quick-links">
+        <a routerLink="/my-profile" class="link-card">
+          <strong>My profile</strong>
+          <span>Review your contact and license details.</span>
+        </a>
+
+        <a routerLink="/driver-settings" class="link-card">
+          <strong>Settings</strong>
+          <span>Update notifications and account preferences.</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</section>

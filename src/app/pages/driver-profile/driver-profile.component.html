@@ -1,0 +1,238 @@
+<section class="profile-shell" *ngIf="driver">
+  <div class="profile-header">
+    <div class="profile-summary">
+      <img [src]="driver.photoUrl" alt="{{ driver.firstName }}" />
+      <div>
+        <h2>{{ driver.firstName }} {{ driver.lastName }}</h2>
+        <span>{{ driver.driverType }} Driver</span>
+        <p>{{ driver.branch }} • {{ driver.status }}</p>
+      </div>
+    </div>
+
+    <button *ngIf="driver.status !== 'ACTIVE'" class="primary-btn" (click)="approve()">Approve</button>
+    <button *ngIf="driver.status === 'ACTIVE'" class="primary-btn" (click)="openEditModal()">Edit Driver</button>
+  </div>
+
+  <div class="profile-grid">
+    <section class="card profile-card">
+      <h3>Profile Completeness</h3>
+      <div class="progress-panel">
+        <strong>{{driver.profileCompleteness}} %</strong>
+        <div class="progress-bar"><span [ngStyle]="{ 'width': driver.profileCompleteness + '%' }"></span></div>
+      </div>
+      <ul class="quick-stats">
+        <li><strong>Next Expiry</strong><span>Medical Certificate • 12 days</span></li>
+        <li><strong>Assigned Vehicle</strong><span>{{ driver.assignedVehicle }}</span></li>
+      </ul>
+    </section>
+
+    <section class="card details-card">
+      <div class="card-row">
+        <div>
+          <h4>Contact</h4>
+          <p>{{ driver.phone }}</p>
+          <p>{{ driver.email }}</p>
+        </div>
+        <div>
+          <h4>License</h4>
+          <p>{{ driver.licenseNumber }}</p>
+          <p>Expires {{ driver.licenseExpiry }}</p>
+        </div>
+      </div>
+      <div class="card-row">
+        <div>
+          <h4>Employee ID</h4>
+          <p>{{ driver.employeeId }}</p>
+        </div>
+        <div>
+          <h4>Branch</h4>
+          <p>{{ driver.branch }}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="profile-details">
+    <section class="card documents-card">
+      <div class="card-header">
+        <h3>Documents</h3>
+        <button class="secondary-btn">Upload Document</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Expiry</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of driver.documents">
+            <td>{{ doc.documentType }}</td>
+            <td>{{ doc.expiryDate }}</td>
+            <td><span class="status-pill" [ngClass]="getDocStatusClass(doc.status)">{{ doc.status }}</span></td>
+            <td><button class="secondary-btn">Preview</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card assignment-card">
+      <h3>Vehicle Assignment</h3>
+      <div class="assignment-row">
+        <div>
+          <span>Plate</span>
+          <strong>{{ driver.assignedVehicle }}</strong>
+        </div>
+        <div>
+          <span>Model</span>
+          <strong>{{ driver.assignedVehicleModel }}</strong>
+        </div>
+      </div>
+      <div class="history-section">
+        <h4>Assignment History</h4>
+        <ul>
+          <li *ngFor="let item of driver.assignmentHistory">
+            <span>{{ item.plate }} • {{ item.model }}</span>
+            <small>{{ item.assignedAt }} • {{ item.status }}</small>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+<!-- EDIT DRIVER MODAL -->
+
+<div class="modal-backdrop" *ngIf="showEditModal">
+  <div class="modal">
+
+    <h3>Edit Driver Profile</h3>
+
+    <!-- PROFILE PHOTO -->
+
+    <div class="profile-photo-upload">
+      <div class="profile-photo-preview">
+        <img
+          *ngIf="editPhotoPreview"
+          [src]="editPhotoPreview"
+          alt="Driver profile photo"
+        />
+
+        <span *ngIf="!editPhotoPreview">No Photo</span>
+      </div>
+
+      <div class="profile-photo-actions">
+        <label class="primary-btn upload-photo-btn">
+          Choose Photo
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onEditPhotoSelected($event)"
+            hidden
+          />
+        </label>
+
+        <button
+          *ngIf="editPhotoPreview"
+          type="button"
+          class="danger-btn"
+          (click)="removeEditPhoto()">
+          Remove
+        </button>
+
+        <small>JPG, PNG or JPEG. Recommended: square image.</small>
+      </div>
+    </div>
+
+
+    <div class="form-grid">
+
+      <label>
+        First Name
+        <input type="text" [(ngModel)]="editDriver.firstName">
+      </label>
+
+      <label>
+        Middle Name
+        <input type="text" [(ngModel)]="editDriver.middleName">
+      </label>
+
+      <label>
+        Last Name
+        <input type="text" [(ngModel)]="editDriver.lastName">
+      </label>
+
+       <label>
+          Gender
+          <select [(ngModel)]="editDriver.gender" name="gender">
+            <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+          </select>
+        </label>
+
+      <label>
+        Date of Birth
+        <input type="date" [(ngModel)]="editDriver.dateOfBirth">
+      </label>
+
+      <label>
+        Nationality
+        <input type="text" [(ngModel)]="editDriver.nationality">
+      </label>
+
+      <label>
+        Phone
+        <input type="text" [(ngModel)]="editDriver.phone">
+      </label>
+
+      <label>
+        Secondary Phone
+        <input type="text" [(ngModel)]="editDriver.secondaryPhone">
+      </label>
+
+      <label>
+        Email
+        <input type="email" [(ngModel)]="editDriver.email">
+      </label>
+
+      <label>
+        Address
+        <input type="text" [(ngModel)]="editDriver.address">
+      </label>
+
+      <label>
+        Employee ID
+        <input type="text" [(ngModel)]="editDriver.employeeId">
+      </label>
+
+      <label>
+        Branch
+        <input type="text" [(ngModel)]="editDriver.branch">
+      </label>
+
+      <label>
+        Driver Type
+        <input type="text" [(ngModel)]="editDriver.driverType">
+      </label>
+
+      <label>
+        License Number
+        <input type="text" [(ngModel)]="editDriver.licenseNumber">
+      </label>
+
+      <label>
+        License Expiry
+        <input type="date" [(ngModel)]="editDriver.licenseExpiry">
+      </label>
+
+    </div>
+
+    <div class="actions">
+      <button class="secondary-btn" (click)="closeEditModal()">Cancel</button>
+      <button class="primary-btn" (click)="updateDriver()">Save Changes</button>
+    </div>
+
+  </div>
+</div>

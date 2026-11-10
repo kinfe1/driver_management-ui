@@ -1,0 +1,186 @@
+<section class="page-shell">
+
+  <div class="header-row">
+    <div>
+      <h2>Driver Documents</h2>
+      <p>Upload, verify and monitor driver compliance.</p>
+    </div>
+
+    <button class="primary-btn" (click)="openUploadModal()">Upload Document</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><h3>{{stats.total}}</h3><span>Total Documents</span></div>
+    <div class="stat-card"><h3>{{stats.pending}}</h3><span>Pending</span></div>
+    <div class="stat-card"><h3>{{stats.verified}}</h3><span>Verified</span></div>
+    <div class="stat-card"><h3>{{stats.expired}}</h3><span>Expired</span></div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="document-filters">
+    <div class="filter-group">
+      <label for="driverFilter">Filter by Driver</label>
+      <select id="driverFilter" [(ngModel)]="selectedDriverId" (change)="filterDocuments()">
+        <option value="">All Drivers</option>
+        <option *ngFor="let driver of drivers" [value]="driver.id">
+          {{driver.firstName}} {{driver.lastName}}
+        </option>
+      </select>
+    </div>
+
+    <button *ngIf="selectedDriverId" class="secondary-btn" (click)="clearDriverFilter()">
+      Clear Filter
+    </button>
+  </div>
+
+  <div class="documents-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Driver</th>
+          <th>Document</th>
+          <th>Expiry</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let doc of filteredDocuments">
+          <td>{{doc.driverName}}</td>
+          <td>{{doc.documentType}}</td>
+          <td>{{doc.expiryDate || 'N/A'}}</td>
+          <td>
+            <span class="status-pill" [ngClass]="getStatusClass(doc.status)">
+              {{doc.status}}
+            </span>
+          </td>
+
+          <td>
+            <!-- Desktop Actions -->
+            <div class="desktop-actions">
+              <button class="secondary-btn" (click)="preview(doc)">Preview</button>
+              <button class="secondary-btn" (click)="download(doc)">Download</button>
+              <button *ngIf="doc.status === 'PENDING'" class="primary-btn" (click)="verify(doc)">Verify</button>
+              <button *ngIf="doc.status === 'PENDING'" class="danger-btn" (click)="reject(doc)">Reject</button>
+              <button class="secondary-btn" (click)="openReplaceModal(doc)">Replace</button>
+            </div>
+
+            <!-- Mobile Actions -->
+            <div class="mobile-actions">
+              <select (change)="handleAction($event, doc)">
+                <option value="">Actions</option>
+                <option value="preview">Preview</option>
+                <option value="download">Download</option>
+                <option *ngIf="doc.status === 'PENDING'" value="verify">Verify</option>
+                <option *ngIf="doc.status === 'PENDING'" value="reject">Reject</option>
+                <option value="replace">Replace</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="filteredDocuments.length === 0">
+          <td colspan="5" class="empty-state">
+            No documents found.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+
+<!-- UPLOAD MODAL -->
+
+<div class="modal-backdrop" *ngIf="showUploadModal">
+  <div class="modal">
+
+    <h3>Upload Document</h3>
+
+    <label>
+      Driver
+      <select [(ngModel)]="upload.driverId">
+        <option value="">Select Driver</option>
+        <option *ngFor="let driver of drivers" [value]="driver.id">
+          {{driver.firstName}} {{driver.lastName}}
+        </option>
+      </select>
+    </label>
+
+    <label>
+      Document Type
+      <select [(ngModel)]="upload.documentType">
+        <option value="DRIVER_LICENSE">Driver License</option>
+        <option value="MEDICAL_CERTIFICATE">Medical Certificate</option>
+        <option value="NATIONAL_ID">National ID</option>
+        <option value="PASSPORT">Passport</option>
+        <option value="INSURANCE">Insurance</option>
+      </select>
+    </label>
+
+    <label>
+      Issue Date
+      <input type="date" [(ngModel)]="upload.issueDate">
+    </label>
+
+    <label>
+      Expiry Date
+      <input type="date" [(ngModel)]="upload.expiryDate">
+    </label>
+
+    <label>
+      Choose File
+      <input type="file" accept=".pdf,.jpg,.jpeg,.png" (change)="onFileSelected($event)">
+    </label>
+
+    <div class="actions">
+      <button class="secondary-btn" (click)="closeUploadModal()">Cancel</button>
+      <button class="primary-btn" (click)="uploadDocument()">Upload</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- REPLACE MODAL -->
+
+<div class="modal-backdrop" *ngIf="showReplaceModal">
+  <div class="modal">
+
+    <h3>Replace Document</h3>
+
+    <label>
+      Document Type
+      <select [(ngModel)]="replace.documentType">
+        <option value="DRIVER_LICENSE">Driver License</option>
+        <option value="MEDICAL_CERTIFICATE">Medical Certificate</option>
+        <option value="NATIONAL_ID">National ID</option>
+        <option value="PASSPORT">Passport</option>
+        <option value="INSURANCE">Insurance</option>
+      </select>
+    </label>
+
+    <label>
+      Issue Date
+      <input type="date" [(ngModel)]="replace.issueDate">
+    </label>
+
+    <label>
+      Expiry Date
+      <input type="date" [(ngModel)]="replace.expiryDate">
+    </label>
+
+    <label>
+      Choose File
+      <input type="file" accept=".pdf,.jpg,.jpeg,.png" (change)="onReplaceFileSelected($event)">
+    </label>
+
+    <div class="actions">
+      <button class="secondary-btn" (click)="closeReplaceModal()">Cancel</button>
+      <button class="primary-btn" (click)="replaceDocument()">Replace</button>
+    </div>
+
+  </div>
+</div>

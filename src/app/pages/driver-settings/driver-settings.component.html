@@ -1,0 +1,56 @@
+<section class="settings-shell">
+  <header class="settings-header">
+    <div>
+      <p class="eyebrow">Account settings</p>
+      <h1>Manage your driver preferences</h1>
+      <p>Update how you receive notifications, review your account details, and keep your profile settings in one place.</p>
+    </div>
+  </header>
+
+  <div class="settings-grid">
+    <section class="panel-card">
+      <h2>Profile</h2>
+      <dl>
+        <div>
+          <dt>Name</dt>
+          <dd>{{ userName }}</dd>
+        </div>
+        <div>
+          <dt>Username</dt>
+          <dd>{{ username }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="panel-card">
+      <h2>Notifications</h2>
+      <form>
+        <label class="toggle-row">
+          <span>Email notifications</span>
+          <input type="checkbox" [(ngModel)]="notificationEmail" name="notificationEmail" />
+        </label>
+        <label class="toggle-row">
+          <span>SMS alerts</span>
+          <input type="checkbox" [(ngModel)]="notificationSms" name="notificationSms" />
+        </label>
+        <label>
+          Preferred language
+          <select [(ngModel)]="preferredLanguage" name="preferredLanguage">
+            <option>English</option>
+            <option>French</option>
+            <option>Spanish</option>
+          </select>
+        </label>
+        <label>
+          Timezone
+          <select [(ngModel)]="timezone" name="timezone">
+            <option>Africa/Lagos</option>
+            <option>UTC</option>
+            <option>Europe/London</option>
+          </select>
+        </label>
+        <button type="button" class="primary-btn" (click)="saveSettings()">Save preferences</button>
+      </form>
+    </section>
+  </div>
+</section>
