@@ -1,0 +1,198 @@
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Driver management</p>
+      <h1>Register new driver</h1>
+      <p>Enter the driver’s profile, contact, and license details to onboard them for fleet assignments.</p>
+    </div>
+
+    <div class="header-actions">
+      <span class="status-chip pending">Pending approval</span>
+    </div>
+  </div>
+
+  <div class="form-layout">
+    <div class="form-card">
+      <form (ngSubmit)="submit()">
+
+        <!-- PROFILE PHOTO -->
+
+        <div class="section-panel">
+          <div class="section-title">
+            <h2>Profile photo</h2>
+            <p>Upload a clear photo of the driver for identification.</p>
+          </div>
+
+          <div class="profile-photo-upload">
+            <div class="profile-photo-preview">
+              <img
+                *ngIf="photoPreview"
+                [src]="photoPreview"
+                alt="Driver profile preview" />
+
+              <span *ngIf="!photoPreview">No Photo</span>
+            </div>
+
+            <div class="profile-photo-actions">
+              <label class="secondary-btn upload-photo-btn">
+                Choose Photo
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  (change)="onPhotoSelected($event)"
+                  hidden />
+              </label>
+
+              <button
+                *ngIf="photoPreview"
+                type="button"
+                class="danger-btn"
+                (click)="removePhoto()">
+                Remove
+              </button>
+
+              <small>JPG, PNG or WebP. Recommended: square photo.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERSONAL DETAILS -->
+
+        <div class="section-panel">
+          <div class="section-title">
+            <h2>Personal details</h2>
+            <p>Capture the driver’s name, gender, and nationality.</p>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              First name
+              <input type="text" [(ngModel)]="driver.firstName" name="firstName" required />
+            </label>
+
+            <label>
+              Middle name
+              <input type="text" [(ngModel)]="driver.middleName" name="middleName" />
+            </label>
+
+            <label>
+              Last name
+              <input type="text" [(ngModel)]="driver.lastName" name="lastName" required />
+            </label>
+
+            <label>
+              Gender
+              <select [(ngModel)]="driver.gender" name="gender">
+                <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+              </select>
+            </label>
+
+            <label>
+              Date of birth
+              <input type="date" [(ngModel)]="driver.dateOfBirth" name="dateOfBirth" />
+            </label>
+
+            <label>
+              Nationality
+              <input type="text" [(ngModel)]="driver.nationality" name="nationality" />
+            </label>
+          </div>
+        </div>
+
+        <!-- CONTACT DETAILS -->
+
+        <div class="section-panel">
+          <div class="section-title">
+            <h2>Contact details</h2>
+            <p>How we communicate with the driver and keep records updated.</p>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              Phone number
+              <input type="text" [(ngModel)]="driver.phone" name="phone" required />
+            </label>
+
+            <label>
+              Secondary phone
+              <input type="text" [(ngModel)]="driver.secondaryPhone" name="secondaryPhone" />
+            </label>
+
+            <label>
+              Email
+              <input type="email" [(ngModel)]="driver.email" name="email" required />
+            </label>
+
+            <label>
+              Address
+              <input type="text" [(ngModel)]="driver.address" name="address" />
+            </label>
+          </div>
+        </div>
+
+        <!-- EMPLOYMENT & LICENSE -->
+
+        <div class="section-panel">
+          <div class="section-title">
+            <h2>Employment & license</h2>
+            <p>Track license and assignment information before saving the profile.</p>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              Driver license number
+              <input type="text" [(ngModel)]="driver.licenseNumber" name="licenseNumber" required />
+            </label>
+
+            <label>
+              License expiry
+              <input type="date" [(ngModel)]="driver.licenseExpiry" name="licenseExpiry" required/>
+            </label>
+
+            <label>
+              Employee ID
+              <input type="text" [(ngModel)]="driver.employeeId" name="employeeId" />
+            </label>
+
+            <label>
+              Driver type
+              <select [(ngModel)]="driver.driverType" name="driverType">
+                <option *ngFor="let type of driverTypes" [value]="type">{{ type }}</option>
+              </select>
+            </label>
+
+            <label>
+              Branch
+              <input type="text" [(ngModel)]="driver.branch" name="branch" required />
+            </label>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="secondary-btn" type="button" (click)="cancel()">Cancel</button>
+          <button class="primary-btn" type="submit">Save Driver</button>
+        </div>
+
+      </form>
+    </div>
+
+    <aside class="info-panel">
+      <div class="panel-card">
+        <p class="eyebrow">Onboarding checklist</p>
+        <h3>Complete these items</h3>
+
+        <ul>
+          <li>Confirm full name and contact details</li>
+          <li>Verify license number and expiry</li>
+          <li>Assign the correct driver type</li>
+          <li>Save to submit for approval</li>
+        </ul>
+      </div>
+
+      <div class="panel-card">
+        <p class="eyebrow">Quick tip</p>
+        <p>Check expiry dates before saving. Pending drivers will remain inactive until approved.</p>
+      </div>
+    </aside>
+  </div>
+</section>
