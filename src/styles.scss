@@ -1,1 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: light;
+}
+
+html {
+  font-size: 90%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f5f3ef;
+  color: #12262d;
+  font-family: "Segoe UI", Inter, Arial, sans-serif;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.primary-btn {
+  background: #3d7577;
+  color: white;
+}
+
+.global-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+.dots-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dots-loader span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3d7577;
+
+  animation: dot-bounce 1.2s infinite ease-in-out;
+}
+
+.dots-loader span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dots-loader span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.dots-loader span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes dot-bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}

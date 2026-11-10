@@ -1,0 +1,125 @@
+<section class="dashboard-shell">
+  <header class="dashboard-header">
+    <div class="dashboard-search">
+      <label class="sr-only" for="dashboard-search">Search fleet data</label>
+      <input id="dashboard-search" type="search" placeholder="Search drivers, vehicles, assignments..." />
+    </div>
+    <div class="header-actions">
+      <button class="secondary-button" type="button">Export report</button>
+      <button class="primary-button" type="button" (click)="addDriver()">Add driver</button>
+    </div>
+  </header>
+
+  <section class="dashboard-metrics">
+    <article class="metric-card">
+      <span class="metric-label">Total drivers</span>
+      <strong>{{ metrics.total }}</strong>
+      <p class="metric-copy">Active roster across all branches.</p>
+    </article>
+    <article class="metric-card">
+      <span class="metric-label">Active drivers</span>
+      <strong>{{ metrics.active }}</strong>
+      <p class="metric-copy">Ready for assignment today.</p>
+    </article>
+    <article class="metric-card">
+      <span class="metric-label">Suspended drivers</span>
+      <strong>{{ metrics.suspended }}</strong>
+      <p class="metric-copy">Require review before they can return to service.</p>
+    </article>
+    <article class="metric-card">
+      <span class="metric-label">Expired licenses</span>
+      <strong>{{ metrics.expiredLicenses }}</strong>
+      <p class="metric-copy">Drivers with at least one expired credential.</p>
+    </article>
+    <!-- <article class="metric-card">
+      <span class="metric-label">Assigned vehicles</span>
+      <strong>{{ metrics.assignedVehicles }}</strong>
+      <p class="metric-copy">Vehicles currently allocated to drivers.</p>
+    </article> -->
+  </section>
+
+  <section class="dashboard-grid">
+    <section class="card compliance-card" aria-labelledby="compliance-heading">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">Compliance</p>
+          <h2 id="compliance-heading">Document compliance overview</h2>
+        </div>
+        <span class="badge status-valid">Stable</span>
+      </div>
+
+      <div class="compliance-summary">
+        <div class="summary-item">
+          <span class="summary-label">Valid documents</span>
+          <strong>{{ compliance.validPct }}%</strong>
+          <p>{{ compliance.valid }} documents</p>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Expiring soon</span>
+          <strong>{{ compliance.expiringPct }}%</strong>
+          <p>{{ compliance.expiringSoon }} documents</p>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Expired</span>
+          <strong>{{ compliance.expiredPct }}%</strong>
+          <p>{{ compliance.expired }} documents</p>
+        </div>
+      </div>
+
+      <div class="progress-list">
+        <div>
+          <div class="progress-label">
+            <span>Valid</span>
+            <strong>{{ compliance.validPct }}%</strong>
+          </div>
+          <div class="progress-bar valid"><span style="width: {{ compliance.validPct }}%"></span></div>
+        </div>
+        <div>
+          <div class="progress-label">
+            <span>Expiring soon</span>
+            <strong>{{ compliance.expiringPct }}%</strong>
+          </div>
+          <div class="progress-bar warning"><span style="width: {{ compliance.expiringPct }}%"></span></div>
+        </div>
+        <div>
+          <div class="progress-label">
+            <span>Expired</span>
+            <strong>{{ compliance.expiredPct }}%</strong>
+          </div>
+          <div class="progress-bar danger"><span style="width: {{ compliance.expiredPct }}%"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card activity-card" aria-labelledby="activity-heading">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">Activity</p>
+          <h2 id="activity-heading">Recent operational events</h2>
+        </div>
+      </div>
+
+      <div class="activity-table-wrap">
+        <table>
+          <caption class="sr-only">Recent driver activity events</caption>
+          <thead>
+            <tr>
+              <th scope="col">Event</th>
+              <th scope="col">Driver</th>
+              <th scope="col">Time</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let event of recentActivity">
+              <td data-label="Event">{{ event.description }}</td>
+              <td data-label="Driver">{{ event.subject }}</td>
+              <td data-label="Time">{{ event.time }}</td>
+              <td data-label="Status"><span class="status-pill" [ngClass]="statusClasses[event.status]">{{ event.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</section>
