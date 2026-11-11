@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ET Richmond Taxi logo">
+  <defs>
+    <linearGradient id="etGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#3d7577"/>
+      <stop offset="100%" stop-color="#2b4f63"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#etGradient)"/>
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" font-size="24" font-weight="800" font-family="Arial, Helvetica, sans-serif" fill="#ffffff" letter-spacing="-1">ET</text>
+</svg>
